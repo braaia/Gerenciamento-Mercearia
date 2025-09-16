@@ -219,5 +219,52 @@ class ControllerEstoque:
             for i in estoque:
                 print(f"Estoque de: {i.produto.nome} | Preço: {i.produto.preco}R$ - Categoria: {i.produto.categoria} - Quantidade: {i.quantidade}\n")
 
-a = ControllerEstoque()
-a.mostrarEstoque()
+class efetuarVenda:
+    def cadastrarVenda(self, produto, vendedor, comprador, quantidadeVendida):
+        x = DaoEstoque.ler()
+        
+        est_list = list(filter(lambda x: x.produto.nome.lower() == produto.lower(), x))
+        if len(est_list) > 0:
+            if est_list[0].quantidade >= quantidadeVendida:
+                x = list(map(lambda x: Estoque(Produtos(x.produto.nome, x.produto.preco, x.produto.categoria), int(x.quantidade) - int(quantidadeVendida)) if(x.produto.nome.lower() == produto.lower()) else(x), x))
+
+                precoxqnt = int(est_list[0].produto.preco) * int(quantidadeVendida)
+                DaoVenda.salvar(Venda(Produtos(produto, str(precoxqnt), est_list[0].produto.categoria), vendedor, comprador, str(quantidadeVendida)))
+
+                print(f"Venda feita com sucesso! Você vendeu {quantidadeVendida} {produto}/s por um total de: {precoxqnt}R$")
+            else:
+                print("A quantidade que deseja vender não está disponivel no estoque!")
+        else:
+            print("O produto que deseja cadastrar a venda não existe!")
+
+        with open('estoque.txt', 'w') as arq:
+            for i in x:
+                arq.writelines(f"{i.produto.nome}|{i.produto.preco}|{i.produto.categoria}|{str(i.quantidade)}")
+                arq.writelines('\n')
+
+    def relatorioVendas(self):
+        vendas = DaoVenda.ler()
+
+        produtos = []
+        for i in vendas:
+            nome = i.itensVendidos.nome
+            quantidade = i.quantidadeVendida
+
+            tamanho = list(filter(lambda x: x['produto'] == nome, produtos))
+            if len(tamanho) > 0:
+                produtos = list(map(lambda x: {'produto':nome, 'quantidade': x['quantidade'] + quantidade} if(x['produto'] == nome) else(x), produtos))
+            else:
+                produtos.append({'produto': nome, 'quantidade': quantidade})
+
+            ordenado = sorted(produtos, key=lambda k: k['quantidade'], reverse=True)
+
+        print("\nEsses são os produtos mais vendidos da mercearia:\n")
+        a = 1
+        for i in ordenado:
+            print(f"========== Produto {a} ==========")
+            print(f"Produto: {i['produto']}\n"
+                    f"Quantidade Vendida: {i['quantidade']}\n")
+            a += 1
+
+a = efetuarVenda()
+a.relatorioVendas()
