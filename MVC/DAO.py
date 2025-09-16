@@ -19,11 +19,6 @@ class DaoCategoria:
             cat_list.append(Categoria(i))
         return cat_list
 
-# DaoCategoria.salvar("Frutas")
-# DaoCategoria.salvar("Verduras")
-# DaoCategoria.salvar("Legumes")
-# DaoCategoria.ler()
-
 class DaoEstoque:
     @classmethod
     def salvar(cls, produto: Produtos, quantidade):
@@ -45,10 +40,6 @@ class DaoEstoque:
                 estoq_list.append(Estoque(Produtos(i[0], i[1], i[2]), i[3]))
         return estoq_list
 
-# x = Produtos("Açai", 20, "Frios")
-# DaoEstoque.salvar(x, 1)
-# DaoEstoque.ler()
-
 class DaoVenda:
     @classmethod
     def salvar(cls, venda: Venda):
@@ -68,11 +59,6 @@ class DaoVenda:
         for i in cls.venda:
             vendas_list.append(Venda(Produtos(i[1], i[2], i[3]), i[0], i[4], i[5], i[6]))
         return vendas_list
-
-# x = Produtos("morango", 20, "frutas")
-# y = Venda(x, "Wesley", "Andrey", 15)
-# DaoVenda.salvar(y)
-# DaoVenda.ler()
 
 class DaoFornecedor:
     @classmethod
@@ -94,10 +80,6 @@ class DaoFornecedor:
             forn_list.append(Fornecedor(i[0], i[1], i[2], i[3]))
         return forn_list
 
-# x = Fornecedor("Coca-Cola", "40.432.544/0001-47", "(82) 9 8716-3703", "Bebidas")
-# DaoFornecedor.salvar(x)
-# DaoFornecedor.ler()
-
 class DaoCliente:
     @classmethod
     def salvar(cls, cliente: Pessoa):
@@ -117,10 +99,6 @@ class DaoCliente:
         for i in cls.cliente:
             clientes_list.append(Pessoa(i[0], i[1], i[2], i[3], i[4]))
         return clientes_list
-    
-# x = Pessoa("Wesley", 18815583890580, 91842890000, "apwiamciw109@gmail.com", 19)
-# DaoCliente.salvar(x)
-# DaoCliente.ler()
 
 class DaoFuncionario:
     @classmethod
@@ -143,7 +121,3 @@ class DaoFuncionario:
             for i in cls.funcionario:
                 func_list.append(Funcionario(i[2], i[3], i[0], i[1], i[5], i[4], i[6]))
             return func_list
-        
-# x = Funcionario(True, "Ceo", "Wesley", 192823918799, 8282032838, "okwdamo290130@gmail.com", 19)
-# DaoFuncionario.salvar(x)
-# DaoFuncionario.ler()
