@@ -37,14 +37,14 @@ class DaoEstoque:
         estoq_list = []
         if len(cls.estoque) > 0:
             for i in cls.estoque:
-                estoq_list.append(Estoque(Produtos(i[0], i[1], i[2]), i[3]))
+                estoq_list.append(Estoque(Produtos(i[0], i[1], i[2]), int(i[3])))
         return estoq_list
 
 class DaoVenda:
     @classmethod
     def salvar(cls, venda: Venda):
         with open('venda.txt', 'a') as arq:
-            arq.writelines(f"{venda.vendedor}|{venda.itensVendidos.nome}|{venda.itensVendidos.preco}|{venda.itensVendidos.categoria}|{venda.comprador}|{str(venda.quantidadeVendida)}|{venda.data}")
+            arq.writelines(f"{venda.vendedor}|{venda.itensVendidos.nome}|{str(venda.quantidadeVendida)}|{venda.itensVendidos.categoria}|{venda.comprador}|{venda.itensVendidos.preco}|{venda.data}")
             arq.writelines('\n')
 
     @classmethod
@@ -57,7 +57,7 @@ class DaoVenda:
         
         vendas_list = []
         for i in cls.venda:
-            vendas_list.append(Venda(Produtos(i[1], i[2], i[3]), i[0], i[4], i[5], i[6]))
+            vendas_list.append(Venda(Produtos(i[1], int(i[5]), i[3]), i[0], i[4], int(i[2]), i[6]))
         return vendas_list
 
 class DaoFornecedor:
@@ -77,7 +77,7 @@ class DaoFornecedor:
 
         forn_list = []
         for i in cls.fornecedor:
-            forn_list.append(Fornecedor(i[0], i[1], i[2], i[3]))
+            forn_list.append(Fornecedor(i[0], int(i[1]), int(i[2]), i[3]))
         return forn_list
 
 class DaoCliente:
@@ -97,14 +97,14 @@ class DaoCliente:
 
         clientes_list = []
         for i in cls.cliente:
-            clientes_list.append(Pessoa(i[0], i[1], i[2], i[3], i[4]))
+            clientes_list.append(Pessoa(i[0], int(i[1]), int(i[2]), int(i[3]), int(i[4])))
         return clientes_list
 
 class DaoFuncionario:
     @classmethod
     def salvar(cls, funcionario: Funcionario):
         with open('funcionarios.txt', 'a') as arq:
-            arq.writelines(f"{funcionario.nome}|{funcionario.cpf}|{funcionario.clt}|{funcionario.cargo}|{funcionario.email}|{funcionario.tel}|{funcionario.idade}")
+            arq.writelines(f"{funcionario.nome}|{str(funcionario.cpf)}|{funcionario.clt}|{funcionario.cargo}|{str(funcionario.email)}|{str(funcionario.tel)}|{str(funcionario.idade)}")
             arq.writelines('\n')
 
     @classmethod
@@ -119,5 +119,5 @@ class DaoFuncionario:
         func_list = []
         if len(cls.funcionario) > 0:
             for i in cls.funcionario:
-                func_list.append(Funcionario(i[2], i[3], i[0], i[1], i[5], i[4], i[6]))
+                func_list.append(Funcionario(i[2], i[3], i[0], int(i[1]), int(i[5]), int(i[4]), int(i[6])))
             return func_list
